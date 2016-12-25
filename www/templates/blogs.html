@@ -1,0 +1,67 @@
+<!-- 从__base__.html 继承blogs.html -->
+{% extends '__base__.html' %}
+
+{% block title %}日志 {% endblock %}
+
+{% block content %}
+    
+    <div class="uk-width-medium-3-4">
+        {% for blog in blogs %}
+            <article class="uk-article">
+                <h2><a href="/blog/{{ blog.id }}">{{ blog.name }}</a></h2>
+                <!-- 
+                    Blog的创建日期显示的是一个浮点数，因为它是由这段模板渲染出来的：
+
+                    <p class="uk-article-meta">发表于{{ blog.created_at }}</p>
+                    解决方法是通过jinja2的filter（过滤器），把一个浮点数转换成日期字符串。我们来编写一个datetime的filter，在模板里用法如下：
+
+                    <p class="uk-article-meta">发表于{{ blog.created_at|datetime }}</p> 
+
+                    filter需要在初始化jinja2时设置。相关代码如下:
+                    init_jinja2(app, filters=dict(datetime=datetime_filter))
+                -->
+
+                <p class="uk-article-meta">发表于{{ blog.created_at|datetime }}</p>
+                <p>{{ blog.summary }}</p>
+                <p><a href="/blog/{{ blog.id }}">继续阅读<i class="uk-icon-angle-double-right"></i></a></p>
+            </article>
+            <hr class="uk-article-divider">
+        {% endfor %}
+    </div>
+
+    <div class="uk-width-medium-1-4">
+        <div class="uk-panel uk-panel-header">
+            <h3 class="uk-panel-title">友情链接</h3>
+            <ul class="uk-list uk-list-line">
+                <li><i class="uk-icon-thumbs-o-up"></i> <a href="#" target="_blank">编程</a></li>
+                <li><i class="uk-icon-thumbs-o-up"></i> <a href="#" target="_blank">读书</a></li>
+                <li><i class="uk-icon-thumbs-o-up"></i> <a href="#" target="_blank">Python教程</a></li>
+                <li><i class="uk-icon-thumbs-o-up"></i> <a href="#" target="_blank">Git教程</a></li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
