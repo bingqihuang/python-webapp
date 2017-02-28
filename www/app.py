@@ -146,8 +146,11 @@ async def init(loop):
     app = web.Application(loop=loop, middlewares=[
         logger_factory, auth_factory, response_factory
     ])
+    # 前端模板
     init_jinja2(app, filters=dict(datetime=datetime_filter))
+    # URL 处理函数自动扫描注册
     add_routes(app, 'handlers')
+    # 自注册
     add_static(app)
     srv = await loop.create_server(app.make_handler(), '127.0.0.1', 9000)
     logging.info('server started at http://127.0.0.1:9000...')
